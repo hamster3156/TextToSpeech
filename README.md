@@ -2,11 +2,11 @@
 神ゲー創造エボリューションのゲーム作品で、テキストから音声合成を行う機能の実装を行いました。このリポジトリでは作成したソースコードをまとめています。
 
 # ダウンロード方法
+[releaseからunitypackageをダウンロードしてください](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.0)
 
 # 必要なツール
+会話音声を再生する処理が非同期処理になっているため、UniTaskをプロジェクトに入れる必要があります。\
 https://github.com/Cysharp/UniTask
-
-会話音声を再生する処理が非同期処理になっているため、上記のツールをプロジェクトに入れる必要があります。
 
 ```C#
  /// <summary>
@@ -79,6 +79,17 @@ https://github.com/Cysharp/UniTask
      }
  }
 ```
+
+また、SpeechSDKをダウンロードする必要もあります。Azureのオンラインドキュメントの方法で失敗してしまったので、[akihiro0105さん](https://github.com/akihiro0105)が公開しているSpeechSDKHelperでSDKをダウンロードしました。本当にありがとうございます!\
+https://github.com/akihiro0105/SpeechSDKHelper
+
+# 参考にした記事
+Azureのリポジトリで公開されているクイックスタートのサンプルスクリプトをベースに作成しています。
+
+https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs
+
+https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A
+
 # 利用方法
 GameObjectにTextToSpeechPlayerをアタッチして利用を行います。\
 ![image](https://github.com/user-attachments/assets/580865cb-588d-4efd-8ab2-9bafc56accbe)
@@ -90,9 +101,7 @@ SpeechKeyを作成したら、インスペクター入力します。\
 読み上げ音声のタイプに関しですが、今回は4つの中から選ぶことができます。\
 ![image](https://github.com/user-attachments/assets/292843a4-a1ef-460a-8e52-a3746b24fa63)
 
-Azureのドキュメントに読み上げ音声の一覧表があります。音声を追加したい場合は、ReadingVoiceNameのenumに名前を追加してください。ドキュメントでは、ハイフンで記載されていますがエディタ上でエラーが出てしまうのでアンダースコアで記述しています。\
-
-https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/language-support?tabs=tts#multilingual-voices
+Azureのドキュメントに[読み上げ音声の一覧表](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/language-support?tabs=tts#multilingual-voices)があります。音声を追加したい場合は、ReadingVoiceNameのenumに名前を追加してください。ドキュメントでは、ハイフンで記載されていますがエディタ上でエラーが出てしまうのでアンダースコアで記述しています。
 
 音声再生を行うために、AudioSourceをシーン上に配置します。会話音声を再生させるために必要なので、必ず配置してください。\
 ![image](https://github.com/user-attachments/assets/9d41803a-e107-47f7-a323-aa64fc1facf2)
@@ -124,5 +133,6 @@ https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/language-supp
 ```
 
 ソースコード上では記載されていませんが、インタフェースの参照方法として自分はサービスロケーターを利用しました。
-
 https://github.com/hamster3156/ServiceLocator
+
+最後にですが、改良できるようにunitypackageを作成したのでぜひご活用ください。
