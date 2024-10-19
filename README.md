@@ -2,11 +2,10 @@
 神ゲー創造エボリューションのゲーム作品で、テキストから音声合成を行う機能の実装を行いました。このリポジトリでは作成したソースコードをまとめています。
 
 # ダウンロード方法
-[releaseからunitypackageをダウンロードしてください](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.0)
+[release](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.0)からunitypackageをダウンロードしてください
 
 # 必要なツール
-会話音声を再生する処理が非同期処理になっているため、UniTaskをプロジェクトに入れる必要があります。\
-https://github.com/Cysharp/UniTask
+会話音声を再生する処理が非同期処理になっているため、[UniTask](https://github.com/Cysharp/UniTask)をプロジェクトに入れる必要があります。
 
 ```C#
  /// <summary>
@@ -80,15 +79,11 @@ https://github.com/Cysharp/UniTask
  }
 ```
 
-また、SpeechSDKをダウンロードする必要もあります。Azureのオンラインドキュメントの方法で失敗してしまったので、[akihiro0105さん](https://github.com/akihiro0105)が公開しているSpeechSDKHelperでSDKをダウンロードしました。本当にありがとうございます!\
-https://github.com/akihiro0105/SpeechSDKHelper
+また、SpeechSDKをダウンロードする必要もあります。Azureのオンラインドキュメントの方法で失敗してしまったので、[akihiro0105さん](https://github.com/akihiro0105)が公開している[SpeechSDKHelper](https://github.com/akihiro0105/SpeechSDKHelper)でSDKをダウンロードしました。本当にありがとうございます!
 
 # 参考にした記事
-Azureのリポジトリで公開されているクイックスタートのサンプルスクリプトをベースに作成しています。
-
-https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs
-
-https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A
+Azureのリポジトリで公開されている[クイックスタートのサンプルスクリプト](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs)をベースに作成しています。また、SpeechSDKのダウロードでは[こちらの記事](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A
+)を参考にしました。
 
 # 利用方法
 GameObjectにTextToSpeechPlayerをアタッチして利用を行います。\
