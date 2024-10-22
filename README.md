@@ -5,85 +5,14 @@
 [release](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.0)からunitypackageをダウンロードしてください
 
 # 必要なツール
-会話音声を再生する処理が非同期処理になっているため、[UniTask](https://github.com/Cysharp/UniTask)をプロジェクトに入れる必要があります。
+・[UniTask](https://github.com/Cysharp/UniTask) \
+・SpeechSDK
 
-```C#
- /// <summary>
- /// 会話を再生する
- /// </summary>
- /// <param name="speakContext">会話内容</param>
- public async UniTask PlaySpeakAsync(string speakContext, CancellationToken ct)
- {
-     // 入力内容が無ければ再生を中断する
-     if (string.IsNullOrEmpty(speakContext))
-     {
-         Debug.LogWarning("speakContextに何も入力されていないです");
-         return;
-     }
-
-     if (_startPlayer != null && _startPlayer.clip != null)
-     {
-         _startPlayer.Play();
-
-         // 開始音声の再生時間を取得
-         var startPlayerLength = Mathf.RoundToInt(_startPlayer.clip.length);
-
-         // 再生が終わるまで待機
-         await UniTask.Delay(startPlayerLength, cancellationToken: ct);
-     }
-
-     using (var result = _speechSynthesizer.StartSpeakingTextAsync(speakContext).Result)
-     {
-         var audioDataStream = AudioDataStream.FromResult(result);
-         var isFirstAudioChunk = true;
-         var audioClip = AudioClip.Create(
-             "Speech",
-             _rate * 600, // Can speak 10mins audio as maximum
-             1,
-             _rate,
-             true,
-             (float[] audioChunk) =>
-             {
-                 var chunkSize = audioChunk.Length;
-                 var audioChunkBytes = new byte[chunkSize * 2];
-                 var readBytes = audioDataStream.ReadData(audioChunkBytes);
-                 if (isFirstAudioChunk && readBytes > 0)
-                 {
-                     isFirstAudioChunk = false;
-                 }
-
-                 for (int i = 0; i < chunkSize; ++i)
-                 {
-                     if (i < readBytes / 2)
-                     {
-                         audioChunk[i] = (short)(audioChunkBytes[i * 2 + 1] << 8 | audioChunkBytes[i * 2]) / 32768.0F;
-                     }
-                     else
-                     {
-                         audioChunk[i] = 0.0f;
-                     }
-                 }
-
-                 if (readBytes == 0)
-                 {
-                     // メインスレッドから呼び出す処理はここには書けない
-                     Thread.Sleep(200);
-                     _isStoping = true;
-                 }
-
-             });
-
-         _speakPlayer.clip = audioClip;
-         PlaySpeakSoundEffect(true);
-     }
- }
-```
-
-また、SpeechSDKをダウンロードする必要もあります。Azureのオンラインドキュメントの方法で失敗してしまったので、[akihiro0105さん](https://github.com/akihiro0105)が公開している[SpeechSDKHelper](https://github.com/akihiro0105/SpeechSDKHelper)でSDKをダウンロードしました。本当にありがとうございます!
+SpeechSDKのダウンロードについてですが、[Azureのオンラインドキュメント](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/how-to-speech-synthesis?tabs=browserjs%2Cterminal&pivots=programming-language-csharp)の方法でダウンロードができなかったので、[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/)の記事で紹介されている方法でダウンロードしました。
 
 # 参考にした記事
-Azureのリポジトリで公開されている[クイックスタートのサンプルスクリプト](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs)をベースに作成しています。また、SpeechSDKのダウロードでは[こちらの記事](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A
-)を参考にしました。
+・[Azureクイックスタートのサンプルスクリプト](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs) \
+・[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A)
 
 # 利用方法
 GameObjectにTextToSpeechPlayerをアタッチして利用を行います。\
