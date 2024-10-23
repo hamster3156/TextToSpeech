@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
+using NaughtyAttributes;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Hamster.Azure.TextToSpeech
         private string _regionSetting;
 
         [SerializeField, Header("読み上げ音声のタイプ")]
-        private ReadingVoiceName _selectReadingVoiceName;
+        private ReadingVoiceNameList _selectReadingVoiceName;
 
         [SerializeField, Header("音楽再生のAudioSource")]
         private AudioSource _startPlayer;
@@ -29,8 +30,11 @@ namespace Hamster.Azure.TextToSpeech
         [SerializeField, Header("会話終了音声のAudioSource")]
         private AudioSource _endPlayer;
 
+        [SerializeField, TextArea(3, 10), Header("再生するメッセージを書く")]
+        private string _inputMessageToPlay;
+
         // 音声名を変換して取得するクラス
-        private ReadingVoiceNameGetter _readingVoiceNameGetter = new();
+        private ReadingVoiceNameListConverter _readingVoiceNameGetter = new();
 
         // Azureの音声合成関連のクラス
         private SpeechConfig _speechConfig;
@@ -43,9 +47,29 @@ namespace Hamster.Azure.TextToSpeech
         private bool _isStoping = false;
 
         /// <summary>
+        /// プレイモードかつ入力メッセージが存在する時にtrueを返す
+        /// </summary>
+        private bool _isPlayModeAndMessageEmpty()
+        {
+            if (!Application.isPlaying)
+            {
+                Debug.LogWarning("プレイモードで実行してください。");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_inputMessageToPlay))
+            {
+                Debug.LogWarning("メッセージが入力されていません。");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// 読み上げ音声を変更する
         /// </summary>
-        public void ChangeReadingVoice(ReadingVoiceName chageName)
+        public void ChangeReadingVoice(ReadingVoiceNameList chageName)
         {
             _speechConfig.SpeechSynthesisVoiceName = _readingVoiceNameGetter.GetConvertVoiceName(chageName);
             _speechSynthesizer = new SpeechSynthesizer(_speechConfig, null);
@@ -174,14 +198,38 @@ namespace Hamster.Azure.TextToSpeech
 
         private void Awake()
         {
-            Initialize();
+            InitializeSpeechConfig();
+        }
+
+        private void Update()
+        {
+            if (_isStoping)
+            {
+                StopSpeak();
+                _isStoping = false;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _speechSynthesizer.Dispose();
+        }
+
+        [Button("会話音声を再生する")]
+        private void PlaySpeakButton()
+        {
+            if (!_isPlayModeAndMessageEmpty())
+            {
+                return;
+            }
+
+            PlaySpeakAsync(_inputMessageToPlay, CancellationToken.None).Forget();
         }
 
         /// <summary>
         /// SpeechConfigの初期化とキャンセル時のエラーハンドリングを設定
         /// </summary>
-        /// <exception cref="Exception"></exception>
-        private void Initialize()
+        private void InitializeSpeechConfig()
         {
             // キーと地域の設定
             _speechConfig = SpeechConfig.FromSubscription(_speechKeySetting, _regionSetting);
@@ -199,25 +247,6 @@ namespace Hamster.Azure.TextToSpeech
                 var message = $"CANCELED:\nReason=[{cancellation.Reason}]\nErrorDetails=[{cancellation.ErrorDetails}]\nDid you update the subscription info?";
                 throw new Exception(message);
             };
-        }
-
-        private async void Update()
-        {
-            if (_isStoping)
-            {
-                StopSpeak();
-                _isStoping = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                await PlaySpeakAsync("Hello World", default);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            _speechSynthesizer.Dispose();
         }
     }
 }

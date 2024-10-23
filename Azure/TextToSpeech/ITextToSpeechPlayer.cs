@@ -6,21 +6,21 @@ namespace Hamster.Azure.TextToSpeech
     public interface ITextToSpeechPlayer
     {
         /// <summary>
-        /// èª­ã¿ä¸Šã’éŸ³å£°ã‚’å¤‰æ›´ã™ã‚‹
+        /// “Ç‚İã‚°‰¹º‚ğ•ÏX‚·‚é
         /// </summary>
-        /// <param name="selectName">é¸æŠã™ã‚‹åå‰</param>
-        void ChangeReadingVoice(ReadingVoiceName selectName);
+        /// <param name="selectName">‘I‘ğ‚·‚é–¼‘O</param>
+        void ChangeReadingVoice(ReadingVoiceNameList selectName);
 
         /// <summary>
-        /// ä¼šè©±ã‚’å†ç”Ÿã™ã‚‹
+        /// ‰ï˜b‚ğÄ¶‚·‚é
         /// </summary>
-        /// <param name="speakContext">ä¼šè©±å†…å®¹</param>
+        /// <param name="speakContext">‰ï˜b“à—e</param>
         /// <param name="ct"></param>
         /// <returns></returns>
         UniTask PlaySpeakAsync(string speakContext, CancellationToken ct);
 
         /// <summary>
-        /// ä¼šè©±ã‚’æ­¢ã‚ã‚‹
+        /// ‰ï˜b‚ğ~‚ß‚é
         /// </summary>
         void StopSpeak();
     }
