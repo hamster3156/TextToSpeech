@@ -6,7 +6,7 @@
 
 # 必要なツール
 ・[UniTask](https://github.com/Cysharp/UniTask) \
-・[SpeechSDK](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/speech-sdk) 
+・[SpeechSDK](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/speech-sdk) \
 ・[NaughtyAttributes](https://assetstore.unity.com/packages/tools/utilities/naughtyattributes-129996?locale=ja-JP) 
 
 SpeechSDKのダウンロードについてですが、[Azureのオンラインドキュメント]([https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/how-to-speech-synthesis?tabs=browserjs%2Cterminal&pivots=programming-language-csharp](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/quickstarts/setup-platform?tabs=windows%2Cubuntu%2Cdotnetcli%2Cdotnet%2Cjre%2Cmaven%2Cnodejs%2Cmac%2Cpypi&pivots=programming-language-csharp#install-the-speech-sdk-for-c))の方法でダウンロードができなかったので、[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/)の記事で紹介されている方法でダウンロードしました。
