@@ -30,16 +30,35 @@ SpeechSDKのダウンロードについてですが、[Azureのオンライン�
 ![image](https://github.com/user-attachments/assets/c9d8fb6e-1fe8-48a6-864a-d0853d523e1c) \
 Azureのドキュメントに[読み上げ音声の一覧表](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/language-support?tabs=tts#multilingual-voices)があります。音声を追加したい場合は、ReadingVoiceNameListのenumに名前を追加してください。ドキュメントでは、ハイフンで記載されていますがエディタ上でエラーが出てしまうのでアンダースコアで記述しています。
 ```C#
-/// <summary>
-/// 読み上げ音声の名前一覧
-/// </summary>
+
+// ここに名前追加する
 public enum ReadingVoiceNameList
 {
     en_KE_ChilembaNeural,
     en_US_EricNeural,
     en_US_RyanMultilingualNeural,
     en_US_SteffanNeural
-    // ここに追加する
+}
+
+// アンダースコアをハイフンに変換しているクラス
+sealed internal class ReadingVoiceNameListConverter
+{
+    /// <summary>
+    /// enumをAzureの読み上げ音声名に変換して返す
+    /// </summary>
+    public string GetConvertVoiceName(ReadingVoiceNameList azureReadingVoiceName)
+    {
+        StringBuilder stringBuilder = new();
+
+        // enumの名前を入れる
+        stringBuilder.Append(azureReadingVoiceName.ToString());
+
+        // アンダースコアをハイフンに変換
+        stringBuilder.Replace("_", "-");
+
+        // 変換した文字列を返す
+        return stringBuilder.ToString();
+    }
 }
 ```
 
