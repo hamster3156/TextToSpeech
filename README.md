@@ -7,12 +7,14 @@
 # 必要なツール
 ・[UniTask](https://github.com/Cysharp/UniTask) \
 ・[SpeechSDK](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/speech-sdk) 
+・[NaughtyAttributes](https://assetstore.unity.com/packages/tools/utilities/naughtyattributes-129996?locale=ja-JP) 
 
 SpeechSDKのダウンロードについてですが、[Azureのオンラインドキュメント]([https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/how-to-speech-synthesis?tabs=browserjs%2Cterminal&pivots=programming-language-csharp](https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/quickstarts/setup-platform?tabs=windows%2Cubuntu%2Cdotnetcli%2Cdotnet%2Cjre%2Cmaven%2Cnodejs%2Cmac%2Cpypi&pivots=programming-language-csharp#install-the-speech-sdk-for-c))の方法でダウンロードができなかったので、[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/)の記事で紹介されている方法でダウンロードしました。
 
 # 参考にした記事
 ・[Azureクイックスタートのサンプルスクリプト](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/quickstart/csharp/unity/text-to-speech/Assets/Scripts/HelloWorld.cs) \
-・[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A)
+・[Azureの音声合成，音声認識をUnityから利用](https://akihiro-document.azurewebsites.net/post/azure/azure_speechsdk/#azure-%E5%81%B4%E8%A8%AD%E5%AE%9A) \
+・[Unityの拡張機能『NaughtyAttributes』を紹介！](https://zenn.dev/m_mikan12/articles/0cb0750c74c96e)
 
 # 注意点
 音声合成の機能を利用するには、[Microsoft Azure portal](https://azure.microsoft.com/ja-jp/get-started/azure-portal/)の[Azure AI services](https://azure.microsoft.com/ja-jp/products/ai-services)の[音声サービス](https://azure.microsoft.com/ja-jp/products/ai-services/ai-speech)を利用してSpeechKeyを作成する必要があります。また、利用状況によって料金がかかるのでご注意ください。
