@@ -2,7 +2,7 @@
 神ゲー創造エボリューションのゲーム作品で、テキストから音声合成を行う機能の実装を行いました。このリポジトリでは作成したソースコードをまとめています。
 
 # ダウンロード方法
-[release](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.0)からunitypackageをダウンロードしてください
+[release](https://github.com/hamster3156/TextToSpeech/releases/tag/v.1.0.1)からunitypackageをダウンロードしてください
 
 # 必要なツール
 ・[UniTask](https://github.com/Cysharp/UniTask) \
